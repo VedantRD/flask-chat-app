@@ -13,6 +13,7 @@ eventlet = "*"
 pymongo = "*"
 flask-login = "*"
 gunicorn = "*"
+gevent-websocket = "*"
 
 [requires]
 python_version = "3.8"
