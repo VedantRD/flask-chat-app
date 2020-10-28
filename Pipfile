@@ -12,6 +12,7 @@ flask-socketio = "*"
 eventlet = "*"
 pymongo = "*"
 flask-login = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.8"
