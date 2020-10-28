@@ -10,9 +10,9 @@
         <div class="card-body pb-4">
             <h4 class="card-title">Welcome to {{room.room_name}}</h4>
             {% if is_room_admin %}
-            <!-- <form action="/rooms/{{room._id}}/edit" class="mb-5">
+            <form action="/rooms/{{room._id}}/edit" class="mb-5">
                 <button class="btn btn-info" type="submit">Edit Room</button>
-            </form> -->
+            </form>
             {% endif %}
             <div class="row">
                 <div class="col-3 border-right border-secondary">
@@ -41,7 +41,8 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js"></script>
 <script>
-    const socket = io.connect('http://localhost:5000');
+    //const socket = io.connect('http://localhost:5000');
+    const socket = io.connect('https://flask-chat-app99.herokuapp.com');
     socket.on('connect', () => {
         socket.emit('join_room', {
             username: '{{username}}',
