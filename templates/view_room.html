@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Chat Room</title>
+{% endblock %}
+
+{% block body %}
+<div style="display:flex; align-items:center; justify-content:center" class="h-100 w-100">
+    <div class="card w-50">
+        <div class="card-body pb-4">
+            <h4 class="card-title">Welcome to {{room.room_name}}</h4>
+            {% if is_room_admin %}
+            <form action="/rooms/{{room._id}}/edit" class="mb-5">
+                <button class="btn btn-info">Edit Room</button>
+            </form>
+            {% endif %}
+            <div class="row">
+                <div class="col-3 border-right border-secondary">
+                    Members
+                    <ul>
+                        {% for member in room_members %}
+                        <li>{{member._id.username}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-9">
+                    <div class="mb-5" id='messages'></div>
+                    <form class="form-inline w-100" id="message_input_form">
+                        <div class="form-group w-75">
+                            <input type="text" name="room_no" class="form-control w-100" id='message_input'
+                                placeholder="Write Message">
+                        </div>
+                        <div class="form-group w-25 pl-3">
+                            <input type="submit" value="Send" class="btn btn-primary w-100">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.1/socket.io.js"></script>
+<script>
+    const socket = io.connect('http://localhost:5000');
+    socket.on('connect', () => {
+        socket.emit('join_room', {
+            username: '{{username}}',
+            room_id: '{{room._id}}'
+        })
+        let message_input = document.getElementById('message_input')
+        document.getElementById('message_input_form').onsubmit = (e) => {
+            e.preventDefault()
+            let message = message_input.value.trim()
+            if (message.length) {
+                socket.emit('send_message', {
+                    username: '{{username}}',
+                    room_id: '{{room._id}}',
+                    message
+                })
+            }
+            message_input.value = ''
+            message_input.focus()
+        }
+    })
+
+    socket.on('receive_message', (data) => {
+        let message = document.createElement('div')
+        message.innerHTML = `<b>${data.username}</b> : ${data.message}`
+        document.getElementById('messages').appendChild(message)
+    })
+
+    socket.on('join_room_announcement', (data) => {
+        if (data.username !== '{{username}}') {
+            let message = document.createElement('div')
+            message.innerHTML = `${data.username} is online`
+            document.getElementById('messages').appendChild(message)
+        }
+    })
+</script>
+{% endblock %}

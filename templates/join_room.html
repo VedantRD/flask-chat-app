@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Join Room</title>
+{% endblock %}
+
+{% block body %}
+<div style="display:flex; align-items:center; justify-content:center" class="h-100 w-100">
+    <div class="card w-25">
+        <div class="card-body pb-4">
+            <h3 class="card-title mb-5">All Rooms</h3>
+            {% if rooms|length == 0 %}
+            <div>Sorry, you are not part of any room !</div>
+            {% else %}
+            <ul>
+                {% for room in rooms %}
+                <li><a href="/rooms/{{room._id.room_id}}">{{room.room_name}}</a></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <form action="/create_room">
+                <input type="submit" value="Create New Room" class="btn btn-primary w-100 mt-5">
+            </form>
+            <form action="/logout">
+                <input type="submit" value="Logout" class="btn btn-danger w-100 mt-3">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

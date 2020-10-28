@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<title>Create Room</title>
+{% endblock %}
+
+{% block body %}
+<div style="display:flex; align-items:center; justify-content:center" class="h-100 w-100">
+    <div class="card w-25">
+        <div class="card-body pb-4">
+            <h3 class="card-title mb-5">Create New Room</h3>
+            <form action="/create_room" method="POST">
+                <div class="form-group">
+                    <label>Room Name</label>
+                    <input type="text" name="room_name" class="form-control" placeholder="Enter room name">
+                </div>
+                <div class="form-group">
+                    <label>Members</label>
+                    <input type="text" name="members" class="form-control" placeholder="Enter room member(s)">
+                </div>
+                <h5 class="text-danger">{{create_room_message}}</h5>
+                <input type="submit" value="Create" class="btn btn-primary w-100 mt-5">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
