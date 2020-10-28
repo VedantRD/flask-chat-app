@@ -11,7 +11,7 @@
             <h4 class="card-title">Welcome to {{room.room_name}}</h4>
             {% if is_room_admin %}
             <form action="/rooms/{{room._id}}/edit" class="mb-5">
-                <button class="btn btn-info">Edit Room</button>
+                <button class="btn btn-info" type="submit">Edit Room</button>
             </form>
             {% endif %}
             <div class="row">
